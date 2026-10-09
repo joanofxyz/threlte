@@ -5,14 +5,14 @@ import type {
   Collider as RapierCollider
 } from '@dimforge/rapier3d-compat'
 import type { Snippet } from 'svelte'
-import type { Euler, Vector3 } from 'three'
+import type { Euler, Vector3Tuple } from 'three'
 import type { ColliderEvents, CreateEvent } from '../../../types/types.js'
 
 // ------------------ BASE ------------------
 
 type Type = 'static' | 'dynamic'
 
-type BaseProps = {
+interface BaseProps {
   /**
    * If a collider is *not* attached to a RigidBody and its type is `static`,
    * its transform is only applied once on initialization. If the transform
@@ -67,14 +67,14 @@ export type Shape =
 
 type Args<TShape extends Shape> = Parameters<(typeof ColliderDesc)[TShape]>
 
-type ShapeProps<TShape extends Shape> = {
+interface ShapeProps<TShape extends Shape> {
   shape: TShape
   args: Args<TShape>
 }
 
 // ------------------ MASS ------------------
 
-type Density = {
+interface Density {
   /** The density of this collider. */
   density: number
   mass?: never
@@ -82,7 +82,8 @@ type Density = {
   principalAngularInertia?: never
   angularInertiaLocalFrame?: never
 }
-type Mass = {
+
+interface Mass {
   /** The mass of this collider. */
   mass: number
   density?: never
@@ -90,19 +91,20 @@ type Mass = {
   principalAngularInertia?: never
   angularInertiaLocalFrame?: never
 }
-type MassProperties = {
+
+interface MassProperties {
   /** The mass of this collider. */
   mass: number
   /** The center of mass of this collider. */
-  centerOfMass: Parameters<Vector3['set']>
+  centerOfMass: Vector3Tuple
   /** The principal angular inertia of this collider. */
-  principalAngularInertia: Parameters<Vector3['set']>
+  principalAngularInertia: Vector3Tuple
   /** The angular inertia local frame of this collider. */
   angularInertiaLocalFrame: Parameters<Euler['set']>
   density?: never
 }
 
-type NoMassProperties = {
+interface NoMassProperties {
   density?: never
   mass?: never
   centerOfMass?: never

@@ -22,7 +22,12 @@
 
   const { camera, dom, invalidate, scene } = useThrelte()
 
-  const { orbitControls, trackballControls, cameraControls } = useControlsContext()
+  const {
+    orbitControls,
+    trackballControls,
+    cameraControls,
+    transformControls: transformControlsContext
+  } = useControlsContext()
 
   let isDragging = $state(false)
 
@@ -81,13 +86,20 @@
   const transformControls = new TransformControls(camera.current, dom)
   const attachGroup = new Group()
 
-  $effect.pre(() => {
+  $effect(() => {
     transformControls.camera = $camera
   })
 
   $effect.pre(() => {
     transformControls?.attach(object ?? attachGroup)
     return () => transformControls?.detach()
+  })
+
+  $effect(() => {
+    transformControlsContext.set(transformControls)
+    return () => {
+      transformControlsContext.set(undefined)
+    }
   })
 
   // This component is receiving the props for the controls as well as the props
@@ -113,12 +125,12 @@
   let transformProps = $state<Props<TransformControls>>({})
   let objectProps = $state<Props<Group>>({})
 
-  $effect.pre(() => {
+  $effect(() => {
     transformProps = {}
     objectProps = {}
 
     Object.keys(props).forEach((key) => {
-      $effect.pre(() => {
+      $effect(() => {
         if (transformOnlyPropNames.includes(key)) {
           transformProps[key] = props[key]
         } else {
@@ -136,6 +148,7 @@
       isDragging = false
     }
     // TODO: unfortunately the type of the event prop is not correct *yet*
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- upstream three TransformControls event type is wrong; revisit when fixed
     props.onchange?.(event as any)
   }
 </script>

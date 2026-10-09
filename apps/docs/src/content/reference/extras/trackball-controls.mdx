@@ -4,6 +4,8 @@ group: 'Interaction'
 sourcePath: 'packages/extras/src/lib/components/controls/TrackballControls/TrackballControls.svelte'
 title: '<TrackballControls>'
 type: 'component'
+webgl: true
+webgpu: true
 componentSignature:
   {
     extends:
@@ -53,3 +55,20 @@ This example shows off just a few of the configurable properties of `<TrackballC
 (or the default camera if not a child of one) and the DOM element the renderer is
 rendering to as the DOM element to listen to. It will also by demand invalidate the
 frame loop.
+
+## `useTrackballControls`
+
+To access the underlying `TrackballControls` instance from another component —
+without a `bind:ref` — use the `useTrackballControls` hook. It returns a reactive
+accessor whose `current` is the instance registered by the nearest
+`<TrackballControls>` within the `<Canvas>`, or `undefined` until it has mounted.
+
+```svelte title="ResetButton.svelte"
+<script lang="ts">
+  import { useTrackballControls } from '@threlte/extras'
+
+  const controls = useTrackballControls()
+</script>
+
+<button onclick={() => controls.current?.reset()}>Reset camera</button>
+```

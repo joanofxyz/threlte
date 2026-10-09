@@ -1,5 +1,88 @@
 # @threlte/extras
 
+## 9.22.0
+
+### Minor Changes
+
+- 7b42101: [@threlte/extras] Add a `@threlte/extras/webgpu` entrypoint with WebGPU-compatible implementations and explicit runtime errors for components awaiting WebGPU support
+
+### Patch Changes
+
+- e705eab: [@threlte/extras] Fix `<MeshDiscardMaterial>` children snippet not receiving `{ ref }`
+- e406193: [@threlte/extras] Fix type errors against three r183+
+- d6a9825: [@threlte/extras] Fix `<SoftShadows>` throwing on scene objects without a material
+- 1dfe40b: [@threlte/extras] Fix `<Grid>` fade using the camera's local instead of world position
+- 6173d5d: [@threlte/extras] Fix initial value capture warnings
+- ea24fdb: [@threlte/extras] Fix interactivity treating every `<BatchedMesh>` instance as one hover target
+- bf75879: [@threlte/extras] Type the scene graph `nodes`/`materials` (and `<GLTF>` props) concretely instead of `any`
+
+## 9.21.1
+
+### Patch Changes
+
+- cdda0b7: Fix portal insertion order
+
+## 9.21.0
+
+### Minor Changes
+
+- 926ef08: Add `useCameraControls`, `useOrbitControls`, `useTrackballControls` and `useTransformControls` hooks
+
+## 9.20.1
+
+### Patch Changes
+
+- 2bb801e: Fix HTML component not responding correctly to resize events
+- 2bb801e: Fix Bounds component in no-animate mode
+
+## 9.20.0
+
+### Minor Changes
+
+- f605bfe: Add `isEnvironment` to environment components so textures can be assigned as a background without replacing `scene.environment`.
+- f605bfe: View: allow same scene rendering
+
+## 9.19.0
+
+### Minor Changes
+
+- b6e29a7: Add eventOptions option to interactivity plugin
+
+## 9.18.0
+
+### Minor Changes
+
+- cb711f6: Add Wobble component
+
+## 9.17.1
+
+### Patch Changes
+
+- cf6480d: Simplify environment-related components internals
+
+## 9.17.0
+
+### Minor Changes
+
+- 6de99ec: Add runes-based reactivity for Audio, PositionalAudio, useFBO, and useGltfAnimations props
+
+## 9.16.0
+
+### Minor Changes
+
+- e47ac42: Fix SoftShadows component
+
+### Patch Changes
+
+- e47ac42: Perf: remove unnecessary effects in T component
+
+## 9.15.2
+
+### Patch Changes
+
+- ab91a3b: Perf: cache values in useInputMap and useKeyboard
+- ab91a3b: Fix: capture portal id to prevent live value reads when props update
+
 ## 9.15.1
 
 ### Patch Changes

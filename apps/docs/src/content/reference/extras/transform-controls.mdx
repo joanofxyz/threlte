@@ -4,6 +4,8 @@ group: 'Interaction'
 title: '<TransformControls>'
 sourcePath: 'packages/extras/src/lib/components/controls/TransformControls/TransformControls.svelte'
 type: 'component'
+webgl: true
+webgpu: true
 componentSignature:
   {
     pretext: 'The component <code>&lt;TransformControls&gt;</code> extends both <code>&lt;T.TransformControls&gt;</code> and <code>&lt;T.Group&gt;</code>. You may pass any property of either of these components to the component <code>&lt;TransformControls&gt;</code>.',
@@ -66,6 +68,25 @@ Any object with an `enabled` property works:
     <T.MeshStandardMaterial />
   </T.Mesh>
 </TransformControls>
+```
+
+## `useTransformControls`
+
+To access the underlying `TransformControls` instance from another component —
+without a `bind:controls` — use the `useTransformControls` hook. It returns a
+reactive accessor whose `current` is the instance registered by the nearest
+`<TransformControls>` within the `<Canvas>`, or `undefined` until it has mounted.
+
+```svelte title="ModeToggle.svelte"
+<script lang="ts">
+  import { useTransformControls } from '@threlte/extras'
+
+  const controls = useTransformControls()
+</script>
+
+<button onclick={() => controls.current?.setMode('translate')}>Translate</button>
+<button onclick={() => controls.current?.setMode('rotate')}>Rotate</button>
+<button onclick={() => controls.current?.setMode('scale')}>Scale</button>
 ```
 
 ## Examples

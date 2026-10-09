@@ -14,14 +14,22 @@ componentSignature:
           default: "'dynamic'"
         },
         { name: 'canSleep', type: 'boolean', default: 'true' },
-        { name: 'linearVelocity', type: 'Position', default: '{}' },
-        { name: 'angularVelocity', type: 'Rotation', default: '{}' },
+        { name: 'linearVelocity', type: '[number, number, number]', default: '[0, 0, 0]' },
+        { name: 'angularVelocity', type: '[number, number, number]', default: '[0, 0, 0]' },
         { name: 'gravityScale', type: 'number', default: '1' },
         { name: 'ccd', type: 'boolean', default: 'false' },
         { name: 'lockRotations', type: 'boolean', default: 'false' },
         { name: 'lockTranslations', type: 'boolean', default: 'false' },
-        { name: 'enabledRotations', type: 'Boolean3Array', default: '[true, true, true]' },
-        { name: 'enabledTranslations', type: 'Boolean3Array', default: '[true, true, true]' },
+        {
+          name: 'enabledRotations',
+          type: '[boolean, boolean, boolean]',
+          default: '[true, true, true]'
+        },
+        {
+          name: 'enabledTranslations',
+          type: '[boolean, boolean, boolean]',
+          default: '[true, true, true]'
+        },
         { name: 'dominance', type: 'number', default: '0' },
         { name: 'linearDamping', type: 'number', default: '0' },
         { name: 'angularDamping', type: 'number', default: '0' },

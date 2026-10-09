@@ -10,23 +10,44 @@
     useTask,
     useThrelte
   } from '@threlte/core'
-  import type { Snippet } from 'svelte'
-  import { Vector4 } from 'three'
-  import { OffscreenObserver } from './OffscreenObserver.svelte.js'
+  import { untrack, type Snippet } from 'svelte'
+  import { Scene, Vector4 } from 'three'
 
-  let { dom, children }: { dom: HTMLElement; children: Snippet<[]> } = $props()
+  let {
+    dom,
+    scene: providedScene,
+    children
+  }: { dom: HTMLElement; scene?: Scene; children: Snippet<[]> } = $props()
 
-  const offscreenObserver = new OffscreenObserver(() => dom)
+  let isOffscreen = $state(false)
+
+  const observer = new IntersectionObserver(([entry]) => {
+    isOffscreen = !entry.isIntersecting
+  })
+
+  $effect(() => {
+    observer.observe(dom)
+
+    return () => {
+      observer.disconnect()
+    }
+  })
 
   const parentContext = useThrelte()
+  const defaultScene = new Scene()
+  const currentScene = $derived(providedScene ?? defaultScene)
 
-  createDOMContext({ dom, canvas: parentContext.canvas })
+  createDOMContext(() => ({ dom, canvas: parentContext.canvas }))
   createCacheContext()
-  const { scene } = createSceneContext()
-  createParentContext(scene)
-  createParentObject3DContext(scene)
+  const sceneContext = createSceneContext(untrack(() => currentScene))
+  createParentContext(() => currentScene)
+  createParentObject3DContext(() => currentScene)
   const { camera } = createCameraContext()
   createUserContext()
+
+  $effect(() => {
+    sceneContext.scene = currentScene
+  })
 
   const { renderer, renderStage, canvas } = useThrelte()
 
@@ -37,7 +58,7 @@
   useTask(
     Symbol('<View>'),
     () => {
-      if (offscreenObserver.isOffscreen) return
+      if (isOffscreen) return
 
       const { left: trackLeft, bottom: trackBottom, width, height } = dom.getBoundingClientRect()
       const { bottom: canvasBottom, left: canvasLeft } = canvas.getBoundingClientRect()
@@ -55,7 +76,7 @@
       renderer.setScissorTest(true)
 
       // render
-      renderer.render(scene, camera.current)
+      renderer.render(currentScene, camera.current)
 
       // reset state
       renderer.setViewport(originalViewport)
@@ -64,7 +85,7 @@
     },
     {
       stage: renderStage,
-      running: () => offscreenObserver.isOffscreen === false
+      running: () => !isOffscreen
     }
   )
 </script>

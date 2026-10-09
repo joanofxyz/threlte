@@ -15,7 +15,7 @@
   import vertexShader from './vertex.js'
   import type { Props } from '@threlte/core'
 
-  interface SparklesProps extends Props<Points> {
+  export interface SparklesProps extends Props<Points> {
     /**
      * Number of particles
      *
@@ -84,8 +84,8 @@
   const vec3 = new Vector3()
   const colorUtil = new Color()
 
-  const isFloat32Array = (def: any): def is Float32Array =>
-    def && (def as Float32Array).constructor === Float32Array
+  const isFloat32Array = (def: unknown): def is Float32Array =>
+    def !== undefined && def !== null && (def as Float32Array).constructor === Float32Array
 
   const geometry = new BufferGeometry()
 

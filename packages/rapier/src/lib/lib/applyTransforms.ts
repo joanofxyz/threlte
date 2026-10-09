@@ -1,12 +1,12 @@
-import type { Euler, Object3D, Vector3 } from 'three'
+import type { Euler, Object3D, Vector3Tuple } from 'three'
 
 export const applyTransforms = (
   object: Object3D,
-  position?: Parameters<Vector3['set']>,
+  position?: Vector3Tuple,
   rotation?: Parameters<Euler['set']>,
-  scale?: Parameters<Vector3['set']>
+  scale?: Vector3Tuple
 ): void => {
-  if (position) object.position.set(...position)
-  if (rotation) object.rotation.set(...rotation)
-  if (scale) object.scale.set(...scale)
+  if (position) object.position.fromArray(position)
+  if (rotation) object.rotation.fromArray(rotation)
+  if (scale) object.scale.fromArray(scale)
 }

@@ -4,7 +4,7 @@ export { useGltf } from './hooks/useGltf.js'
 export { useDraco } from './hooks/useDraco.js'
 export { useMeshopt } from './hooks/useMeshopt.js'
 export { useKtx2 } from './hooks/useKtx2.js'
-export { useGltfAnimations } from './hooks/useGltfAnimations.js'
+export { useGltfAnimations } from './hooks/useGltfAnimations.svelte.js'
 export { useProgress } from './hooks/useProgress.js'
 export { useTexture } from './hooks/useTexture.js'
 export { useFBO } from './hooks/useFBO.svelte.js'
@@ -20,6 +20,10 @@ export { useFollow } from './hooks/useFollow.svelte.js'
 export { useMask } from './hooks/useMask.js'
 export { useViewport } from './hooks/useViewport.svelte.js'
 export { useTrailTexture } from './hooks/useTrailTexture.svelte.js'
+export { useCameraControls } from './components/CameraControls/useCameraControls.js'
+export { useOrbitControls } from './components/controls/OrbitControls/useOrbitControls.js'
+export { useTrackballControls } from './components/controls/TrackballControls/useTrackballControls.js'
+export { useTransformControls } from './components/controls/TransformControls/useTransformControls.js'
 export { meshBounds } from './utilities/meshBounds.js'
 
 // abstractions
@@ -65,6 +69,7 @@ export { default as ShadowMaterial } from './components/ShadowMaterial/ShadowMat
 export { default as Stars } from './components/Stars/Stars.svelte'
 export { default as SVG } from './components/Svg/Svg.svelte'
 export { default as MeshRefractionMaterial } from './components/MeshRefractionMaterial/MeshRefractionMaterial.svelte'
+export { default as Wobble } from './components/Wobble/Wobble.svelte'
 export { default as Text3DGeometry } from './components/Text3DGeometry/Text3DGeometry.svelte'
 export { default as PerfMonitor } from './components/PerfMonitor/PerfMonitor.svelte'
 export { default as Outlines } from './components/Outlines/Outlines.svelte'
@@ -134,7 +139,6 @@ export {
 // bvh
 export { bvh } from './bvh/bvh.svelte.js'
 export type { BVHOptions, BVHProps } from './bvh/types.js'
-import { SAH, CENTER, AVERAGE } from 'three-mesh-bvh'
-export const BVHSplitStrategy = { SAH, CENTER, AVERAGE }
+export { BVHSplitStrategy } from './bvh/splitStrategy.js'
 
 export type { ThrelteGltf } from './types/types.js'

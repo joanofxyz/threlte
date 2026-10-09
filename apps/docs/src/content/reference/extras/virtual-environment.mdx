@@ -4,6 +4,7 @@ group: 'Staging'
 sourcePath: 'packages/extras/src/lib/components/environment/VirtualEnvironment/VirtualEnvironment.svelte'
 title: <VirtualEnvironment>
 type: 'component'
+webgl: true
 componentSignature:
   {
     exports:
@@ -55,6 +56,12 @@ componentSignature:
           default: 'false',
           description: 'Whether to set `scene.background` to the environment texture',
           name: 'isBackground',
+          type: 'boolean'
+        },
+        {
+          default: 'true',
+          description: 'Whether to set `scene.environment` to the environment texture',
+          name: 'isEnvironment',
           type: 'boolean'
         },
         {

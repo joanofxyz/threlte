@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Snippet } from 'svelte'
+  import { untrack, type Snippet } from 'svelte'
   import { usePortalContext } from './usePortalContext.svelte.js'
   import { SvelteSet } from 'svelte/reactivity'
 
@@ -11,6 +11,7 @@
 
   let { id = 'default', object, children }: Props = $props()
 
+  // @Todo Remove in Threlte 9
   $effect.pre(() => {
     if (object) {
       console.error('<Portal>: "object" prop has been removed. Use "attach" instead.')
@@ -22,11 +23,18 @@
   $effect.pre(() => {
     if (!children) return
 
-    if (!portals.has(id)) {
-      portals.set(id, new SvelteSet())
-    }
+    const currentId = id
 
-    portals.get(id)?.add(children)
-    return () => portals.get(id)?.delete(children)
+    return untrack(() => {
+      let contents = portals.get(currentId)
+
+      if (contents === undefined) {
+        contents = new SvelteSet()
+        portals.set(currentId, contents)
+      }
+
+      contents.add(children)
+      return () => contents.delete(children)
+    })
   })
 </script>
